@@ -19,8 +19,9 @@ module.exports = function (app, log) {
         res.end(chunk, encoding);
         var socketLog = log.createSublogger(
           req.socket.remoteAddress + ":" + req.socket.remotePort);
-        socketLog.info(
-          req.method + " " + req.url + " " + (new Date() - startTime) + "ms ");
+        socketLog.info([
+          req.method, req.url, res.statusCode, (new Date() - startTime) + "ms "
+        ].join(' '));
       };
     });
 
