@@ -3,10 +3,20 @@
   "version": "1.0.1",
   "description": "Sets up logging to a TaggedLogger for important http.Server events",
   "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha -R spec"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/brikteknologier/winston-tagged-http-logger.git"
   },
   "author": "Magnus Hoff <magnus.hoff@brik.no>",
-  "license": "BSD"
+  "license": "BSD",
+  "devDependencies": {
+    "tagged-logger": "~1.0.0",
+    "mocha": "~1.11.0",
+    "winston": "~0.7.2",
+    "supertest": "~0.7.0",
+    "express": "~3.2.6"
+  }
 }
