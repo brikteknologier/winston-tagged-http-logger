@@ -22,7 +22,7 @@ describe('Tagged http logger', function() {
         if (req.url == '/sync') {
           res.end();
         } else if (req.url == '/async') {
-          setTimeout(function() { res.statusCode = 201; res.end() }, 200);
+          setTimeout(function() { res.statusCode = 201; res.end() }, 10);
         }
       });
       wthl(server, logger);
@@ -41,13 +41,11 @@ describe('Tagged http logger', function() {
     it('should log a request', function(done) {
       server.listen(0, function() {
         request(server).get('/sync').end(function(err, res) {
-          setTimeout(function() {
-            assert(transport.writeOutput.length == 2);
-            assert(transport.writeOutput[1].match(/get/gi));
-            assert(transport.writeOutput[1].match(/sync/gi));
-            assert(transport.writeOutput[1].match(/200/g));
-            done();
-          }, 50);
+          assert(transport.writeOutput.length == 2);
+          assert(transport.writeOutput[1].match(/get/gi));
+          assert(transport.writeOutput[1].match(/sync/gi));
+          assert(transport.writeOutput[1].match(/200/g));
+          done();
         });
       });
     });
@@ -55,13 +53,11 @@ describe('Tagged http logger', function() {
     it('should log an async request', function(done) {
       server.listen(0, function() {
         request(server).get('/async').end(function(err, res) {
-          setTimeout(function() {
-            assert(transport.writeOutput.length == 2);
-            assert(transport.writeOutput[1].match(/get/gi));
-            assert(transport.writeOutput[1].match(/async/gi));
-            assert(transport.writeOutput[1].match(/201/g));
-            done();
-          }, 50);
+          assert(transport.writeOutput.length == 2);
+          assert(transport.writeOutput[1].match(/get/gi));
+          assert(transport.writeOutput[1].match(/async/gi));
+          assert(transport.writeOutput[1].match(/201/g));
+          done();
         });
       });
     });
@@ -74,7 +70,7 @@ describe('Tagged http logger', function() {
       wthl(server, logger);
       server.get('/sync', function(req, res) { res.end() });
       server.get('/async', function(req, res) {
-        setTimeout(function() { res.statusCode = 201; res.end() }, 200);
+        setTimeout(function() { res.statusCode = 201; res.end() }, 10);
       });
     });
     it('should log the http listen event', function(done) {
@@ -90,13 +86,11 @@ describe('Tagged http logger', function() {
     it('should log a request', function(done) {
       server.listen(0, function() {
         request(server).get('/sync').end(function(err, res) {
-          setTimeout(function() {
-            assert(transport.writeOutput.length == 2);
-            assert(transport.writeOutput[1].match(/get/gi));
-            assert(transport.writeOutput[1].match(/sync/gi));
-            assert(transport.writeOutput[1].match(/200/g));
-            done();
-          }, 50);
+          assert(transport.writeOutput.length == 2);
+          assert(transport.writeOutput[1].match(/get/gi));
+          assert(transport.writeOutput[1].match(/sync/gi));
+          assert(transport.writeOutput[1].match(/200/g));
+          done();
         });
       });
     });
@@ -104,13 +98,11 @@ describe('Tagged http logger', function() {
     it('should log an async request', function(done) {
       server.listen(0, function() {
         request(server).get('/async').end(function(err, res) {
-          setTimeout(function() {
-            assert(transport.writeOutput.length == 2);
-            assert(transport.writeOutput[1].match(/get/gi));
-            assert(transport.writeOutput[1].match(/async/gi));
-            assert(transport.writeOutput[1].match(/201/g));
-            done();
-          }, 50);
+          assert(transport.writeOutput.length == 2);
+          assert(transport.writeOutput[1].match(/get/gi));
+          assert(transport.writeOutput[1].match(/async/gi));
+          assert(transport.writeOutput[1].match(/201/g));
+          done();
         });
       });
     });
@@ -122,13 +114,11 @@ describe('Tagged http logger', function() {
 
       server.listen(0, function() {
         request(server).get('/nested/thing').end(function(err, res) {
-          setTimeout(function() {
-            assert(transport.writeOutput.length == 2);
-            assert(transport.writeOutput[1].match(/get/gi));
-            assert(transport.writeOutput[1].match(/\/nested\/thing/gi));
-            assert(transport.writeOutput[1].match(/200/g));
-            done();
-          }, 50);
+          assert(transport.writeOutput.length == 2);
+          assert(transport.writeOutput[1].match(/get/gi));
+          assert(transport.writeOutput[1].match(/\/nested\/thing/gi));
+          assert(transport.writeOutput[1].match(/200/g));
+          done();
         });
       });
     });
