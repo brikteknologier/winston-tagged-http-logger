@@ -44,6 +44,7 @@ describe('Tagged http logger', function() {
           setTimeout(function() {
             assert(transport.writeOutput.length == 2);
             assert(transport.writeOutput[1].match(/get/gi));
+            assert(transport.writeOutput[1].match(/sync/gi));
             assert(transport.writeOutput[1].match(/200/g));
             done();
           }, 50);
@@ -57,6 +58,7 @@ describe('Tagged http logger', function() {
           setTimeout(function() {
             assert(transport.writeOutput.length == 2);
             assert(transport.writeOutput[1].match(/get/gi));
+            assert(transport.writeOutput[1].match(/async/gi));
             assert(transport.writeOutput[1].match(/201/g));
             done();
           }, 50);
@@ -91,6 +93,7 @@ describe('Tagged http logger', function() {
           setTimeout(function() {
             assert(transport.writeOutput.length == 2);
             assert(transport.writeOutput[1].match(/get/gi));
+            assert(transport.writeOutput[1].match(/sync/gi));
             assert(transport.writeOutput[1].match(/200/g));
             done();
           }, 50);
@@ -104,7 +107,26 @@ describe('Tagged http logger', function() {
           setTimeout(function() {
             assert(transport.writeOutput.length == 2);
             assert(transport.writeOutput[1].match(/get/gi));
+            assert(transport.writeOutput[1].match(/async/gi));
             assert(transport.writeOutput[1].match(/201/g));
+            done();
+          }, 50);
+        });
+      });
+    });
+
+    it('should handle nested express servers', function(done) {
+      var nestedServer = express();
+      nestedServer.get('/thing', function(req, res) { res.end() });
+      server.use('/nested', nestedServer);
+
+      server.listen(0, function() {
+        request(server).get('/nested/thing').end(function(err, res) {
+          setTimeout(function() {
+            assert(transport.writeOutput.length == 2);
+            assert(transport.writeOutput[1].match(/get/gi));
+            assert(transport.writeOutput[1].match(/\/nested\/thing/gi));
+            assert(transport.writeOutput[1].match(/200/g));
             done();
           }, 50);
         });
