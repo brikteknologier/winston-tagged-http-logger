@@ -1,12 +1,14 @@
 module.exports = function (app, log) {
   function loggerMiddleware(req, res, next) {
     var startTime = new Date();
+    var url = req.url;
+    var method = req.method;
 
     function writeLog() {
       var socketLog = log.createSublogger(
         req.socket.remoteAddress + ":" + req.socket.remotePort);
       socketLog.info([
-        req.method, req.url, res.statusCode, (new Date() - startTime) + "ms "
+        method, url, res.statusCode, (new Date() - startTime) + "ms "
       ].join(' '));
     }
 
