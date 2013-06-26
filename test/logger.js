@@ -64,5 +64,52 @@ describe('Tagged http logger', function() {
       });
     });
   });
+
+  describe('express http server', function() {
+    var server;
+    beforeEach(function() {
+      server = express();
+      wthl(server, logger);
+      server.get('/sync', function(req, res) { res.end() });
+      server.get('/async', function(req, res) {
+        setTimeout(function() { res.statusCode = 201; res.end() }, 200);
+      });
+    });
+    it('should log the http listen event', function(done) {
+      server.listen(0, function() {
+        process.nextTick(function() {
+          assert(transport.writeOutput.length == 1);
+          assert(transport.writeOutput[0].match(/listening/gi));
+          done();
+        });
+      });
+    });
+
+    it('should log a request', function(done) {
+      server.listen(0, function() {
+        request(server).get('/sync').end(function(err, res) {
+          setTimeout(function() {
+            assert(transport.writeOutput.length == 2);
+            assert(transport.writeOutput[1].match(/get/gi));
+            assert(transport.writeOutput[1].match(/200/g));
+            done();
+          }, 50);
+        });
+      });
+    });
+
+    it('should log an async request', function(done) {
+      server.listen(0, function() {
+        request(server).get('/async').end(function(err, res) {
+          setTimeout(function() {
+            assert(transport.writeOutput.length == 2);
+            assert(transport.writeOutput[1].match(/get/gi));
+            assert(transport.writeOutput[1].match(/201/g));
+            done();
+          }, 50);
+        });
+      });
+    });
+  });
 });
 
