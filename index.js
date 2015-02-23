@@ -5,10 +5,8 @@ module.exports = function (app, log) {
     var method = req.method;
 
     function writeLog() {
-      var socketLog = log.createSublogger(
-        req.socket.remoteAddress + ":" + req.socket.remotePort);
       var level = res.statusCode < 400 ? 'info' : 'warn';
-      socketLog.log(level, [
+      log.log(level, [
         method, url, res.statusCode, (new Date() - startTime) + "ms "
       ].join(' '));
     }
