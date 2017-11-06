@@ -1,6 +1,6 @@
 {
   "name": "winston-tagged-http-logger",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Sets up logging to a TaggedLogger for important http.Server events",
   "main": "index.js",
   "scripts": {
