@@ -13,8 +13,8 @@
   "author": "Magnus Hoff <magnus.hoff@brik.no>",
   "license": "BSD",
   "peerDependencies": {
-    "winston": "~0.7.2",
-    "tagged-logger": "~1.0.0"
+    "winston": ">=0.7.2",
+    "tagged-logger": ">=1.0.0"
   },
   "devDependencies": {
     "tagged-logger": "~1.0.0",
